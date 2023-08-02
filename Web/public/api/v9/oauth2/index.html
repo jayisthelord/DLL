@@ -1,0 +1,394 @@
+<html>
+    <head>
+        <title>DLL Auth</title>
+        <!-- update the version number as needed -->
+        <script defer src="/__/firebase/10.1.0/firebase-app-compat.js"></script>
+        <!-- include only the Firebase features as you need -->
+        <script defer src="/__/firebase/10.1.0/firebase-auth-compat.js"></script>
+        <script defer src="/__/firebase/10.1.0/firebase-database-compat.js"></script>
+        <script defer src="/__/firebase/10.1.0/firebase-firestore-compat.js"></script>
+        <script defer src="/__/firebase/10.1.0/firebase-functions-compat.js"></script>
+        <script defer src="/__/firebase/10.1.0/firebase-messaging-compat.js"></script>
+        <script defer src="/__/firebase/10.1.0/firebase-storage-compat.js"></script>
+        <script defer src="/__/firebase/10.1.0/firebase-analytics-compat.js"></script>
+        <script defer src="/__/firebase/10.1.0/firebase-remote-config-compat.js"></script>
+        <script defer src="/__/firebase/10.1.0/firebase-performance-compat.js"></script>
+
+        <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+
+        <style>
+            html {
+            height: 100%;
+            width: 100%;
+            }
+            body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            background: #262626;
+            }
+            .continer {
+            padding: 10rem 10rem;
+            }
+            .txt {
+            color: #ffffff;
+            font-family: sans-serif;
+            margin-bottom: 2rem;
+            }
+            .title_txt {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            }
+            .desc_txt {
+            letter-spacing: 0.1rem;
+            line-height: 1.9rem;
+            margin-bottom: 3rem;
+            }
+
+            .btn {
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            appearance: none;
+            padding: 0.8rem 3.5rem;
+            background: #363636;
+            text-decoration: none;
+            color: #ffffffbb;
+            font-family: sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 9999px;
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            }
+            .btn:hover {
+            background: #303030;
+            }
+            .btn_active {
+            background: #292929 !important;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
+            }
+
+            .btn2 {
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            appearance: none;
+            padding: 0.8rem 3.8rem;
+            background: #0073ff33 !important;
+            text-decoration: none;
+            color: #ffffffbb;
+            font-family: sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 9999px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            box-shadow: none !important;
+            margin-top: 1rem;
+            }
+            .btn3 {
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            appearance: none;
+            padding: 0.8rem 1.8rem;
+            background: transparent !important;
+            text-decoration: none;
+            color: #63c3ff;
+            font-family: sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 9999px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            box-shadow: none !important;
+            margin-top: 1rem;
+            border: solid 1px #ffffff66;
+            }
+            .btn4 {
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            appearance: none;
+            padding: 0.8rem 3.5rem;
+            background: transparent !important;
+            text-decoration: none;
+            color: #ffffffbb;
+            font-family: sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 9999px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            box-shadow: none !important;
+            margin-top: 1rem;
+            }
+
+            .ripple_test {
+            font-family: sans-serif;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            padding: 30px 130px;
+            color: #ffffff90;
+            background: #2f2f2f;
+            border-radius: 30px;
+            }
+
+            .ripple {
+            position: absolute;
+            border-radius: 100%;
+            z-index: 10;
+            transform: translateX(-50%) translateY(-50%);
+            pointer-events: none;
+            }
+            .for_ripple {
+            display: block;
+            overflow: hidden;
+            z-index: 1;
+            max-width: 360px;
+            margin: 100px auto 16px;
+            position: relative;
+            transition: 0.05s;
+            }
+
+            .ripl_test {
+            font-family: sans-serif;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            padding: 30px 130px;
+            color: #ffffff90;
+            background: #2f2f2f;
+            border-radius: 30px;
+            }
+
+            .ripl {
+            position: absolute;
+            border-radius: 100%;
+            z-index: 10;
+            transform: translateX(-50%) translateY(-50%);
+            pointer-events: none;
+            }
+            .for_ripl {
+            display: block;
+            overflow: hidden;
+            z-index: 1;
+            max-width: 360px;
+            margin: 100px auto 16px;
+            position: relative;
+            transition: 0.05s;
+            }
+
+            #toast_clicked {
+            font-family: sans-serif;
+            background-color: #333333;
+            color: #ffffffbb;
+            box-shadow: #00000066 0px 7px 29px 0px;
+            position: fixed;
+            bottom: 0px;
+            border-radius: 9999px;
+            padding: 0.8rem 7rem 0.8rem 2rem;
+            margin-bottom: 15px;
+            margin-left: 15px;
+            display: none;
+            z-index: 999;
+            }
+            #toast_clicked a {
+            text-decoration: none;
+            color: #4898e8;
+            }
+            .display_toast {
+            display: block !important;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div class="continer">
+        <div class="for_ripl ripl_test" style="padding: 32px 24px;">
+            <h2 style="text-align: center; margin-top: -5;">DLL // oauth2</h2>
+            <h1 style="font-size: 15; text-align: center; margin-top: -11; margin-left: 25; margin-right: 25;">Thank you for adding DLL to your server, its time to get excited </h1>
+            <div style="display:inline-block; text-align: center; margin-bottom: -25;">
+                <button onclick="hello()" class="for_ripple btn2" style="display: inline-block; margin-left: 5; margin-right: 8;">Open Discord</button>
+                <button onclick="hello()" class="for_ripple btn3" style="display: inline-block;">Website</button>
+            </div>
+            
+        </div>
+        <h1 id="load" style="font-size: 12; color: #ffffff90; text-align: center; font-family: sans-serif; margin-top: -5; margin-left: 25%; margin-right: 25%;">Firebase SDK Loading&hellip;</h1>
+        </div>
+        <div id="toast_clicked">
+            ff&nbsp;&nbsp;<a href="#">We`re working on this, Coming Soon.</a>
+        </div>
+        <script>
+            let animation_ripples = [];
+            var animation_fade;
+
+            let for_ripple = document.querySelectorAll(".for_ripple");
+            for_ripple.forEach(function (target) {
+            target.addEventListener("mousedown", (event) => {
+                let ripple_width;
+                if (event.offsetX >= event.currentTarget.clientWidth - event.offsetX) {
+                ripple_width = event.offsetX * 2.4;
+                } else {
+                ripple_width = (event.currentTarget.clientWidth - event.offsetX) * 2.4;
+                }
+                let current = event.currentTarget;
+
+                if (current.tagName == "BUTTON") {
+                current.classList.add("btn_active");
+                }
+
+                current.insertAdjacentHTML(
+                "afterbegin",
+                '<div class="ripple" style="left:' +
+                    event.offsetX +
+                    "px;top:" +
+                    event.offsetY +
+                    "px;width:" +
+                    ripple_width +
+                    "px;height:" +
+                    ripple_width +
+                    'px;"></div>'
+                );
+
+                // current.insertAdjacentHTML(
+                //   "afterbegin",
+                //   '<div class="sparkle ripple" style="left:' +
+                //     event.offsetX +
+                //     "px;top:" +
+                //     event.offsetY +
+                //     "px;width:" +
+                //     ripple_width*1.5 +
+                //     "px;height:" +
+                //     ripple_width*1.5 +
+                //     'px;"></div>'
+                // );
+
+                const ripple_objects = Array.from(
+                document.querySelectorAll(".for_ripple > .ripple")
+                );
+                ripple_objects.forEach(function (anim_target) {
+                ripple_objects.shift();
+                animation_ripples.push(
+                    anim_target.animate(
+                    {
+                        width: [0, ripple_width + "px"],
+                        height: [0, ripple_width + "px"],
+                        borderRadius: ["9999px", "9999px"],
+                        background: [
+                        'radial-gradient(circle closest-side, #ffffff35 0%, transparent), url("https://drive.google.com/uc?export=view&id=1O_UEy30KjTQO42qRIw_oq7LW0Kw8R-Un") repeat center / 50px 50px',
+                        "radial-gradient(circle closest-side, #ffffff35 80%, transparent)"
+                        ]
+                    },
+                    {
+                        fill: "forwards",
+                        duration: 200,
+                        easing: "cubic-bezier(0.4, 0, 0.2, 1)"
+                    }
+                    )
+                );
+                });
+            });
+            });
+
+            for_ripple.forEach(function (target) {
+            target.addEventListener("mouseup", (event) => {
+                animation_ripples.forEach(function (anim_target) {
+                anim_target.finished.then(function () {
+                    animation_fade = anim_target.effect.target.animate(
+                    {
+                        opacity: [1, 0]
+                    },
+                    {
+                        fill: "forwards",
+                        duration: 280,
+                        easing: "cubic-bezier(0, 0.55, 0.45, 1)"
+                    }
+                    );
+                    animation_fade.finished.then(function () {
+                    var el = anim_target.effect.target.remove();
+                    document.querySelector(".btn").classList.remove("btn_active");
+                    });
+                });
+                });
+            });
+            });
+
+            function hello() {
+            let toast = document.getElementById("toast_clicked");
+            toast.classList.add("display_toast");
+            toast
+                .animate(
+                {
+                    bottom: ["-10rem", "0rem"]
+                },
+                {
+                    fill: "forwards",
+                    duration: 300,
+                    easing: "cubic-bezier(0,.85,0,1)"
+                }
+                )
+                .finished.then(function () {
+                toast
+                    .animate(
+                    {
+                        bottom: ["0rem", "-10rem"]
+                    },
+                    {
+                        fill: "forwards",
+                        duration: 300,
+                        easing: "cubic-bezier(.57,0,0,1)"
+                    }
+                    )
+                    .finished.then(function () {
+                    toast.classList.remove("display_toast");
+                    });
+                });
+            }
+        </script>
+        <script>
+            let openedWindow;
+            function closeOpenedWindow() {
+                openedWindow.close();
+            }
+          document.addEventListener('DOMContentLoaded', function() {
+            const loadEl = document.querySelector('#load');
+            // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+            // // The Firebase SDK is initialized and available here!
+            //
+            // firebase.auth().onAuthStateChanged(user => { });
+            // firebase.database().ref('oauth2').on('value', snapshot => { });
+            // firebase.firestore().doc('/foo/bar').get().then(() => { });
+            // firebase.functions().httpsCallable('yourFunction')().then(() => { });
+            // firebase.messaging().requestPermission().then(() => { });
+            // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+            // firebase.analytics(); // call to activate
+            // firebase.analytics().logEvent('tutorial_completed');
+            // firebase.performance(); // call to activate
+            //
+            // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+    
+            try {
+              let app = firebase.app();
+              let features = [
+                'auth', 
+                'database', 
+                'firestore',
+                'functions',
+                'messaging', 
+                'storage', 
+                'analytics', 
+                'remoteConfig',
+                'performance',
+              ].filter(feature => typeof app[feature] === 'function');
+              loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
+            } catch (e) {
+              console.error(e);
+              loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
+            }
+          });
+        </script>
+    </body>
+</html>
